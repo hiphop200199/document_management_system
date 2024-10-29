@@ -1,9 +1,6 @@
-<?php require_once "./parts/head.php"; ?>
-<div id="index">
-<header>
-    <button id="login">login</button>
-</header>
-<h1 id="title">Docs.</h1>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    width="793.70099"
    height="1122.5197"
@@ -16,8 +13,27 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  
- 
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="0.72426347"
+     inkscape:cx="167.75663"
+     inkscape:cy="278.21367"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
   <g
      inkscape:label="圖層 1"
      inkscape:groupmode="layer"
@@ -30,34 +46,22 @@
     <path
        style="fill:none;stroke:#6d0346;stroke-width:15.0009;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.999999"
        d="m 275.30878,366.75043 c 43.34043,-49.71116 142.25241,54.24662 234.64928,-6.78499"
-       id="path2"
-       sodipodi:nodetypes="cc" />
-    <path
-       style="fill:none;stroke:#6d0346;stroke-width:15.0009;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.999999"
-       d="m 267.54208,435.78608 c 43.34043,-49.71116 142.25241,54.24662 234.64928,-6.78499"
        id="path3"
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#6d0346;stroke-width:15.0009;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.999999"
+       d="m 267.54208,435.78608 c 43.34043,-49.71116 142.25241,54.24662 234.64928,-6.78499"
+       id="path5"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#6d0346;stroke-width:15.0009;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.999999"
        d="m 267.54208,504.82173 c 43.34043,-49.71116 142.25241,54.24662 234.64928,-6.78499"
-       id="path4"
+       id="path6"
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#6d0346;stroke-width:5.24943;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:0.999999"
        d="m 452.68885,615.20081 c 4.34331,7.07615 8.59665,-1.60613 9.11295,-0.72982 3.78273,6.42038 6.79527,-1.24654 7.78053,0.3751 6.43259,10.58742 24.73071,-15.07067 26.6833,-30.76925 1.54681,-12.43622 -6.79423,36.81977 10.80147,29.2452"
-       id="path5"
+       id="path4"
        sodipodi:nodetypes="csssc" />
   </g>
-</svg>       
-<dialog>
-        <form >
-            <input type="text" placeholder="email...">
-            <input type="password" name="" id="" placeholder="password...">
-            <button type="submit">send</button>
-            <a href="">register</a>
-            <a href="">forgot password?</a>
-        </form>
-       </dialog>
-
-</div>
-<?php require_once './parts/foot.php'; ?>
+</svg>
