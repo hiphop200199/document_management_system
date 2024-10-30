@@ -4,11 +4,11 @@
   margin: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
-  overflow-x: clip;
-  color: #A5B68D;
-  color: #ECDFCC;
-  color: #FCFAEE;
-  color: #DA8359;
+  overflow: hidden;
+  color: #a5b68d;
+  color: #ecdfcc;
+  color: #fcfaee;
+  color: #da8359;
   font-family: "Cormorant Garamond", serif;
 }
 
@@ -41,14 +41,16 @@
   height: 700px;
 }
 #index svg g * {
-  stroke: #DA8359;
+  stroke: #da8359;
 }
 #index svg g #path1 {
   stroke-dasharray: 1444.1029052734;
   stroke-dashoffset: 1444.1029052734;
   animation: animate 1s linear forwards;
 }
-#index svg g #path2, #index svg g #path3, #index svg g #path4 {
+#index svg g #path2,
+#index svg g #path3,
+#index svg g #path4 {
   stroke-dasharray: 245.7899017334;
   stroke-dashoffset: 245.7899017334;
   animation: animate 0.5s 1s linear forwards;
@@ -59,6 +61,70 @@
   animation: animate 0.25s 1.5s linear forwards;
 }
 
+#dashboard {
+  position: relative;
+  min-height: 100dvh;
+}
+#dashboard header {
+  height: 100px;
+  background-color: #fcfaee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 10px;
+}
+#dashboard header * {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+#dashboard header #reload {
+  font-size: 2rem;
+}
+#dashboard header #filter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+#dashboard header #filter * {
+  margin-block: 1px;
+  color: #da8359;
+}
+#dashboard header #filter input, #dashboard header #filter select {
+  padding: 2px;
+  border: 3px solid #a5b68d;
+  border-radius: 8px;
+  outline: none;
+}
+#dashboard header #filter input:focus, #dashboard header #filter select:focus {
+  border-color: #da8359;
+}
+#dashboard header #identity {
+  display: flex;
+  flex-direction: column;
+}
+#dashboard #body {
+  display: flex;
+  min-height: calc(100dvh - 100px);
+}
+#dashboard #body aside {
+  width: 10%;
+  background-color: #ecdfcc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#dashboard #body aside * {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+#dashboard #body main {
+  width: 90%;
+}
+#dashboard #body main iframe {
+  width: 100%;
+  height: 100%;
+}
+
 dialog {
   position: fixed;
   left: calc(50% - 225px);
@@ -67,7 +133,7 @@ dialog {
   opacity: 0;
   width: 450px;
   height: 450px;
-  background-color: #FCFAEE;
+  background-color: #fcfaee;
   border: none;
   border-radius: 16px;
   filter: drop-shadow(0px 3px 5px #da8359);
@@ -102,24 +168,27 @@ dialog form section {
 }
 dialog form input {
   padding: 2px;
-  border: 3px solid #A5B68D;
+  border: 3px solid #a5b68d;
   border-radius: 8px;
   outline: none;
 }
 dialog form input:focus {
-  border-color: #DA8359;
+  border-color: #da8359;
 }
 dialog.open {
   transform: none;
   opacity: 1;
 }
 
-button:not(#close-modal), a {
+button:not(#close-modal),
+a {
   position: relative;
   border: none;
   cursor: pointer;
+  background: none;
 }
-button:not(#close-modal)::after, a::after {
+button:not(#close-modal)::after,
+a::after {
   position: absolute;
   content: "";
   left: 0;
@@ -127,11 +196,20 @@ button:not(#close-modal)::after, a::after {
   width: 0%;
   height: 3px;
   border-radius: 8px;
-  background-color: #DA8359;
-  transition: 0.7s;
+  background-color: #da8359;
+  transition: 0.3s;
 }
-button:not(#close-modal):hover::after, a:hover::after {
+button:not(#close-modal):hover::after,
+a:hover::after {
   width: 100%;
+}
+
+*::-moz-placeholder {
+  color: #da8359;
+}
+
+*::placeholder {
+  color: #da8359;
 }
 
 @keyframes animate {
