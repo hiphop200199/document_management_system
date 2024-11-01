@@ -37,6 +37,31 @@ $('#close-delete-modal').on('click',e => handleDialog(e,'delete','close'));
   $("#main-search-btn").on("click", (e) => handleSearch(e, "main"));
   $("#aside-search-btn").on("click", (e) => handleSearch(e, "aside"));
 
+
+  $('#register-form').on('submit',function(e){
+      e.preventDefault()
+      let formInputs = {
+        name:$("#register-form input[type='text']").val(),
+        email:$("#register-form input[type='email']").val(),
+        password:$("#register-form input[type='password']").val(),
+      }
+      let data = JSON.stringify(formInputs)
+      $.ajax({
+        type: "POST",
+        url: "auth.php",
+        data: data,
+        contentType: "application/json",//用來標示傳過去的資料格式
+        processData:false,
+        dataType: "json",
+        success: function (response) {
+          console.log(response);          
+        },
+        error:function (error){
+          console.log(error);                
+      }
+      });
+  })
+
   function handleDialog(e, type, dir) {
     e.preventDefault();
     let object;

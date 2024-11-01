@@ -54,12 +54,12 @@
       <button id="close-login-modal">✖</button>
       <input type="text" placeholder="email...">
       <input type="password" name="" id="" placeholder="password...">
-      <p id="login-message"></p>
+      <p id="login-message" class="message"></p>
       <section>
          <button type="submit">send</button>
-         <a href="">register</a>
+         <a href="register.php">register</a>
       </section>
-      <a href="">forgot password?</a>
+      <a href="forgot-password.php">forgot password?</a>
    </form>
 </dialog>
 <?php require_once './parts/foot.php'; ?>

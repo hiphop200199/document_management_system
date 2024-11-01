@@ -50,7 +50,7 @@ class Auth
     public function register()
     {
         header('Content-Type:application/json'); //回傳json格式
-        $account = filter_var($_POST['account'], FILTER_VALIDATE_EMAIL); //驗證email格式
+       /*  $account = filter_var($_POST['account'], FILTER_VALIDATE_EMAIL); //驗證email格式
         $password = password_hash(strip_tags(trim($_POST['password'])), PASSWORD_DEFAULT); //去空白並去掉html,xml,php標籤並雜湊
 
 
@@ -77,7 +77,11 @@ class Auth
                 echo json_encode(['message' => 'register success.', 'redirect' => 'navigate.php']);
                 exit;
             }
-        }
+        } */
+        $request_body = file_get_contents('php://input');
+    
+        $data = json_decode($request_body, true);
+        var_dump($data);
     }
     public function forgotpassword()
     {
@@ -118,22 +122,6 @@ class Auth
     }
 }
 $auth = new Auth($conn);
-switch ($_POST['type']) {
-    case 'register':
-        $auth->register();
-        break;
-    case 'login':
-        $auth->login();
-        break;
-    case 'logout':
-        $auth->logout();
-        break;
-    case 'forgot-password':
-        $auth->forgotpassword();
-        break;
-    case 'reset-password':
-        $auth->resetpassword();
-        break;
-}
+$auth->register();
 
 $auth = null;

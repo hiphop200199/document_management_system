@@ -19,7 +19,7 @@
   height: 100dvh;
   background-color: #fcfaee;
   
- 
+  
     #login {
       position: absolute;
       right: 0;
@@ -31,7 +31,7 @@
       cursor: pointer;
     }
   
-  #title {
+  #title,#not-found {
     font-size: 10rem;
     text-align: center;
     margin-top: 50px;
@@ -64,6 +64,43 @@
         animation: animate 0.25s 1.5s linear forwards;
       }
     }
+  }
+  .form{
+    position: absolute;
+    left: calc(50% - 225px);
+    top: calc(50% - 225px);
+    width: 450px;
+    height: 450px;
+     display: flex;
+     flex-direction: column;
+     justify-content: space-evenly;
+     align-items: center;
+     border-radius: 8px;
+     box-shadow: 0 2px 3px 2px #da8359;
+     *{
+      font-size: 2rem;
+      font-weight: 700;
+      color: #da8359;
+      background: none;
+     }
+     input{
+      padding: 2px;
+      border: 3px solid #a5b68d;
+      border-radius: 8px;
+      outline: none;
+      &:focus {
+        border-color: #da8359;
+      }
+     }
+     button{
+      box-shadow: 0px 2px 1px 2px #da8359;
+    &:active{
+      box-shadow: 0px 0px 1px 2px #da8359;
+    }
+    .message{
+      color: #a5b68d;
+    }
+     }
   }
 }
 
@@ -480,11 +517,11 @@ a {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width:576px){
   #login-dialog,#alert-dialog,#upload-dialog,#delete-dialog { 
-    left: calc(50% - 45%);
-    width: 90%;
-    max-width: 450px;
+    margin-inline: 10%;
+    width: 80%;
+    left: 0;
     *{
       font-size: 1.5rem;
     }
@@ -492,6 +529,25 @@ a {
       * {
         font-size: 1.5rem;
       }   
+    }
+  
+  }
+  #index{
+      .form{
+      margin-inline: 10%;
+      width: 80%;      
+      left: 0;
+      *{
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+@media screen and (min-width:577px) and (max-width: 768px) {
+  
+  #index{
+    #not-found{
+      font-size: 5rem;
     }
   
   }
