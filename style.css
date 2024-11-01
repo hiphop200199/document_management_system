@@ -5,8 +5,8 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
   overflow: hidden;
+  color: #ECDFCC;
   color: #a5b68d;
-  color: #ecdfcc;
   color: #fcfaee;
   color: #da8359;
   font-family: "Cormorant Garamond", serif;
@@ -16,16 +16,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
   height: 100dvh;
   background-color: #fcfaee;
 }
-#index header {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
-#index header #login {
+#index #login {
+  position: absolute;
+  right: 0;
   background: none;
   border: none;
   font-size: 2rem;
@@ -35,10 +31,15 @@
 }
 #index #title {
   font-size: 10rem;
+  text-align: center;
+  margin-top: 50px;
 }
 #index svg {
-  width: 700px;
-  height: 700px;
+  max-width: 700px;
+  max-height: 700px;
+  width: 90%;
+  height: 60dvh;
+  align-self: center;
 }
 #index svg g * {
   stroke: #da8359;
@@ -80,52 +81,158 @@
 #dashboard header #reload {
   font-size: 2rem;
 }
-#dashboard header #filter {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
 #dashboard header #filter * {
-  margin-block: 1px;
+  margin: 2px;
   color: #da8359;
 }
-#dashboard header #filter input, #dashboard header #filter select {
+#dashboard header #filter form {
+  display: flex;
+  align-items: center;
+}
+#dashboard header #filter form input, #dashboard header #filter form select {
   padding: 2px;
   border: 3px solid #a5b68d;
   border-radius: 8px;
   outline: none;
 }
-#dashboard header #filter input:focus, #dashboard header #filter select:focus {
+#dashboard header #filter form input:focus, #dashboard header #filter form select:focus {
   border-color: #da8359;
+}
+#dashboard header #filter form span {
+  width: -moz-fit-content;
+  width: fit-content;
+  display: inline-block;
+  position: relative;
+}
+#dashboard header #filter form span * {
+  margin: 0;
+}
+#dashboard header #filter form span button {
+  position: absolute;
+  right: 5px;
+  top: calc(50% - 0.75rem);
+  padding: 2px;
+  background: none;
+  border: none;
+}
+#dashboard header #filter form span button img {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 #dashboard header #identity {
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
+}
+#dashboard header #identity #admin-btns * {
+  margin-inline: 5px;
+}
+#dashboard header #aside-menu-btn {
+  font-size: 2rem;
+  display: none;
+  transition: 0.3s;
+}
+#dashboard header #aside-menu-btn.active {
+  rotate: 0.25turn;
 }
 #dashboard #body {
+  position: relative;
   display: flex;
+  justify-content: center;
+  background-color: #fcfaee;
   min-height: calc(100dvh - 100px);
 }
-#dashboard #body aside {
-  width: 10%;
-  background-color: #ecdfcc;
+#dashboard #body #link-list {
+  width: 15%;
+  background-color: #a5b68d;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#dashboard #body aside * {
+#dashboard #body #link-list * {
   font-size: 1.5rem;
   font-weight: 700;
+  color: #fcfaee;
 }
-#dashboard #body main {
-  width: 90%;
-}
-#dashboard #body main iframe {
-  width: 100%;
+#dashboard #body #aside-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  right: 0;
   height: 100%;
+  width: 0%;
+  background-color: #fcfaee;
+  opacity: 0;
+  transition: 0.3s;
+  z-index: 1;
+}
+#dashboard #body #aside-menu * {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-block: 10px;
+}
+#dashboard #body #aside-menu.active {
+  width: 100vw;
+  opacity: 1;
+}
+#dashboard #body #aside-menu form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#dashboard #body #aside-menu form input, #dashboard #body #aside-menu form select {
+  padding: 2px;
+  border: 3px solid #a5b68d;
+  border-radius: 8px;
+  outline: none;
+}
+#dashboard #body #aside-menu form input:focus, #dashboard #body #aside-menu form select:focus {
+  border-color: #da8359;
+}
+#dashboard #body #aside-menu form span {
+  width: -moz-fit-content;
+  width: fit-content;
+  display: inline-block;
+  position: relative;
+}
+#dashboard #body #aside-menu form span * {
+  margin: 0;
+}
+#dashboard #body #aside-menu form span button {
+  position: absolute;
+  right: 5px;
+  top: calc(50% - 0.75rem);
+  padding: 2px;
+  background: none;
+  border: none;
+}
+#dashboard #body #aside-menu form span button img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+#dashboard #body #aside-menu form label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#dashboard #body main #controls {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+#dashboard #body main #controls * {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #da8359;
+  margin-inline: 5px;
+}
+#dashboard #body main #pdf-container {
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
-dialog {
+#login-dialog {
   position: fixed;
   left: calc(50% - 225px);
   top: calc(50% - 225px);
@@ -140,7 +247,7 @@ dialog {
   transition: 0.7s;
   z-index: 1;
 }
-dialog form {
+#login-dialog form {
   position: relative;
   height: 100%;
   display: flex;
@@ -148,34 +255,180 @@ dialog form {
   flex-direction: column;
   align-items: center;
 }
-dialog form #close-modal {
+#login-dialog form #close-login-modal {
   position: absolute;
   right: 15px;
   top: 5px;
   border: none;
   cursor: pointer;
 }
-dialog form * {
+#login-dialog form * {
   font-size: 2rem;
   font-weight: 700;
   text-decoration: none;
   background: none;
 }
-dialog form section {
+#login-dialog form section {
   width: 100%;
   display: flex;
   justify-content: space-evenly;
 }
-dialog form input {
+#login-dialog form #login-message {
+  color: #a5b68d;
+}
+#login-dialog form input {
   padding: 2px;
   border: 3px solid #a5b68d;
   border-radius: 8px;
   outline: none;
 }
-dialog form input:focus {
+#login-dialog form input:focus {
   border-color: #da8359;
 }
-dialog.open {
+#login-dialog.open {
+  transform: none;
+  opacity: 1;
+}
+
+#alert-dialog {
+  position: fixed;
+  left: calc(50% - 225px);
+  top: calc(50% - 225px);
+  transform: translateY(100px);
+  opacity: 0;
+  width: 450px;
+  height: 450px;
+  background-color: #fcfaee;
+  border: none;
+  border-radius: 16px;
+  filter: drop-shadow(0px 3px 5px #da8359);
+  transition: 0.7s;
+  z-index: 1;
+}
+#alert-dialog #close-alert-modal {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  border: none;
+  cursor: pointer;
+}
+#alert-dialog * {
+  font-size: 2rem;
+  font-weight: 700;
+  text-decoration: none;
+  background: none;
+  color: #da8359;
+}
+#alert-dialog #alert {
+  position: relative;
+  top: calc(50% - 21.5px);
+  text-align: center;
+}
+#alert-dialog.open {
+  transform: none;
+  opacity: 1;
+}
+
+#upload-dialog {
+  position: fixed;
+  left: calc(50% - 225px);
+  top: calc(50% - 225px);
+  transform: translateY(100px);
+  opacity: 0;
+  width: 450px;
+  height: 450px;
+  background-color: #fcfaee;
+  border: none;
+  border-radius: 16px;
+  filter: drop-shadow(0px 3px 5px #da8359);
+  transition: 0.7s;
+  z-index: 1;
+}
+#upload-dialog #close-upload-modal {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  border: none;
+  cursor: pointer;
+}
+#upload-dialog * {
+  font-size: 2rem;
+  font-weight: 700;
+  text-decoration: none;
+  background: none;
+  color: #da8359;
+}
+#upload-dialog #file {
+  position: relative;
+  top: 20%;
+  left: 10%;
+  width: 80%;
+}
+#upload-dialog #upload-message {
+  position: relative;
+  top: 35%;
+  text-align: center;
+}
+#upload-dialog #confirm-upload {
+  position: relative;
+  left: calc(50% - 32px);
+  top: 50%;
+  text-align: center;
+  box-shadow: 0px 2px 1px 2px #da8359;
+}
+#upload-dialog #confirm-upload:active {
+  box-shadow: 0px 0px 1px 2px #da8359;
+}
+#upload-dialog.open {
+  transform: none;
+  opacity: 1;
+}
+
+#delete-dialog {
+  position: fixed;
+  left: calc(50% - 225px);
+  top: calc(50% - 225px);
+  transform: translateY(100px);
+  opacity: 0;
+  width: 450px;
+  height: 450px;
+  background-color: #fcfaee;
+  border: none;
+  border-radius: 16px;
+  filter: drop-shadow(0px 3px 5px #da8359);
+  transition: 0.7s;
+  z-index: 1;
+}
+#delete-dialog #close-delete-modal {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  border: none;
+  cursor: pointer;
+}
+#delete-dialog * {
+  font-size: 2rem;
+  font-weight: 700;
+  text-decoration: none;
+  background: none;
+  color: #da8359;
+}
+#delete-dialog #delete-message {
+  position: relative;
+  top: calc(50% - 21.5px);
+  text-align: center;
+}
+#delete-dialog #confirm-delete {
+  position: relative;
+  left: calc(50% - 28.655px);
+  top: 50%;
+  text-align: center;
+  box-shadow: 0px 2px 1px 2px #da8359;
+}
+#delete-dialog #confirm-delete:active {
+  box-shadow: 0px 0px 1px 2px #da8359;
+}
+#delete-dialog.open {
   transform: none;
   opacity: 1;
 }
@@ -184,6 +437,7 @@ button:not(#close-modal),
 a {
   position: relative;
   border: none;
+  outline: none;
   cursor: pointer;
   background: none;
 }
@@ -199,8 +453,8 @@ a::after {
   background-color: #da8359;
   transition: 0.3s;
 }
-button:not(#close-modal):hover::after,
-a:hover::after {
+button:not(#close-modal):focus-visible::after,
+a:focus-visible::after {
   width: 100%;
 }
 
@@ -215,5 +469,105 @@ a:hover::after {
 @keyframes animate {
   to {
     stroke-dashoffset: 0;
+  }
+}
+@media screen and (max-width: 768px) {
+  #login-dialog, #alert-dialog, #upload-dialog, #delete-dialog {
+    left: 5%;
+    width: 90%;
+    max-width: 450px;
+  }
+  #login-dialog *, #alert-dialog *, #upload-dialog *, #delete-dialog * {
+    font-size: 1.5rem;
+  }
+  #login-dialog form *, #alert-dialog form *, #upload-dialog form *, #delete-dialog form * {
+    font-size: 1.5rem;
+  }
+  #dashboard {
+    position: relative;
+    min-height: 100dvh;
+  }
+  #dashboard header #filter {
+    display: none;
+  }
+  #dashboard header #filter form {
+    flex-direction: column;
+  }
+  #dashboard header #filter form span {
+    width: -moz-fit-content;
+    width: fit-content;
+    display: inline-block;
+    position: relative;
+  }
+  #dashboard header #filter form span * {
+    margin: 0;
+  }
+  #dashboard header #filter form span button {
+    position: absolute;
+    right: 5px;
+    top: calc(50% - 0.75rem);
+    padding: 2px;
+    background: none;
+    border: none;
+  }
+  #dashboard header #filter form span button img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  #dashboard header #identity {
+    display: none;
+    flex-direction: column;
+  }
+  #dashboard header #aside-menu-btn {
+    display: inline;
+  }
+  #dashboard #body #link-list {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 0%;
+    opacity: 0;
+    transition: 0.3s;
+    z-index: 1;
+  }
+  #dashboard #body #link-list.active {
+    width: 100vw;
+    opacity: 1;
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 992px) {
+  #dashboard {
+    position: relative;
+    min-height: 100dvh;
+  }
+  #dashboard header #filter form {
+    flex-direction: column;
+  }
+  #dashboard header #filter form span {
+    width: -moz-fit-content;
+    width: fit-content;
+    display: inline-block;
+    position: relative;
+  }
+  #dashboard header #filter form span * {
+    margin: 0;
+  }
+  #dashboard header #filter form span button {
+    position: absolute;
+    right: 5px;
+    top: calc(50% - 0.75rem);
+    padding: 2px;
+    background: none;
+    border: none;
+  }
+  #dashboard header #filter form span button img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  #dashboard header #identity {
+    flex-direction: column;
+  }
+  #dashboard #body #link-list {
+    width: 20%;
   }
 }/*# sourceMappingURL=style.css.map */

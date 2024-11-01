@@ -1,6 +1,6 @@
 <?php
 require_once(__DIR__.'/parts/db.php');
-class Product
+class File
 {
     private $conn;
     
@@ -105,7 +105,7 @@ class Product
    
 }
 
-$product = new Product($conn);
+$product = new File($conn);
 
 
 
