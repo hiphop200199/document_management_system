@@ -202,6 +202,10 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: #fcfaee;
+            width: 80%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-block: 10px;
           }
       }
       #aside-menu{
@@ -410,27 +414,28 @@
     background: none;
     color: #da8359;
   }
-  #file{
+  form{
     position: relative;
-    top: 20%;
-    left: 10%;
-    width: 80%;
-  }
-  #upload-message{
-    position: relative;
-    top: 35%;
-    text-align: center;
-  }
-  #confirm-upload{
-    position: relative;
-    left: calc(50% - 32px);
-    top: 50%;
-    text-align: center;
-    box-shadow: 0px 2px 1px 2px #da8359;
-    &:active{
-      box-shadow: 0px 0px 1px 2px #da8359;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 80%;
+    top: 10%;
+    #file{
+      width: 80%;
+    }
+    #upload-message{ 
+      text-align: center;
+    }
+    #confirm-upload{
+      box-shadow: 0px 2px 1px 2px #da8359;
+      &:active{
+        box-shadow: 0px 0px 1px 2px #da8359;
+      }
     }
   }
+  
   &.open {
     transform: none;
     opacity: 1;
@@ -466,7 +471,7 @@
   }
   #delete-message{
     position: relative;
-    top: calc(50% - 21.5px);
+    top: 40%;
     text-align: center;
   }
   #confirm-delete{
@@ -541,6 +546,75 @@ a {
         font-size: 1.5rem;
       }
     }
+  }
+  #dashboard {
+    position: relative;
+    min-height: 100dvh;
+   
+  
+    header {
+    
+     
+     
+      #filter {
+        display: none;
+        form{
+          flex-direction: column;      
+          
+          span{
+            width: fit-content;
+            display: inline-block;
+            position: relative;
+            *{
+              margin: 0;
+            }
+           
+            button{        
+              position: absolute;
+              right: 5px;
+              top: calc(50% - 0.75rem);
+              padding: 2px;
+              background:none;
+              border: none;        
+              img{
+                width: 1.5rem;
+                height: 1.5rem;
+              }
+            }
+          }
+        }
+      
+       
+      }
+      #identity {
+        display: none;
+       flex-direction: column;
+       
+      }
+      #aside-menu-btn{
+        display: inline;
+      }
+    }
+    #body{
+      
+      #link-list {
+        position: absolute;
+        right: 0;
+        height: 100%;
+        width: 0%;       
+        opacity: 0;
+        transition: 0.3s;     
+        z-index: 1;   
+        &.active {
+          width: 100vw;
+          opacity: 1;
+        }
+       
+        
+        }
+       
+    }
+    
   }
 }
 @media screen and (min-width:577px) and (max-width: 768px) {

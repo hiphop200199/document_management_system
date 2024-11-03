@@ -1,4 +1,9 @@
-<?php require_once "./parts/head.php"; ?>
+<?php
+ require_once "./parts/head.php";
+ if($_GET) {
+  header('Location:not-found.php');
+ }
+ ?>
 <div id="index">
    <button id="login">login</button>
    <h1 id="title">Docs.</h1>
@@ -50,9 +55,9 @@
 </div>
 <dialog id="login-dialog">
 
-   <form>
+   <form id="login-form">
       <button id="close-login-modal">✖</button>
-      <input type="text" placeholder="email...">
+      <input type="email" placeholder="email...">
       <input type="password" name="" id="" placeholder="password...">
       <p id="login-message" class="message"></p>
       <section>
@@ -62,4 +67,5 @@
       <a href="forgot-password.php">forgot password?</a>
    </form>
 </dialog>
+<script src="index.js"></script>
 <?php require_once './parts/foot.php'; ?>

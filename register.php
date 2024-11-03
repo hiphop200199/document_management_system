@@ -1,4 +1,9 @@
-<?php require_once "./parts/head.php"; ?>
+<?php
+ require_once "./parts/head.php";
+ if($_GET) {
+      header('Location:not-found.php');
+}
+?>
 <div id="index">
 <form id="register-form" class="form">    
       <input type="text" name="" id="" placeholder="name..." required>
@@ -8,4 +13,5 @@
          <button type="submit">send</button>
    </form>
 </div>
+<script src="register.js"></script>
 <?php require_once './parts/foot.php';?>

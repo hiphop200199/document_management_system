@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__.'/parts/db.php');
+date_default_timezone_set('Asia/Taipei');//設定預設時區
 class File
 {
     private $conn;
@@ -8,43 +9,53 @@ class File
     {
         $this->conn = $conn;
     }
-    public function createItem() 
+    public function getDataFromFrontend()
     {
+        if(isset($_FILES['file'])){
+            $this->createItem();
+           exit;
+        } 
+              
+        $request_body = file_get_contents('php://input');
+       
+        $data = json_decode($request_body, true);
+       
+        switch ($data['task']) {
+            case 'getItems':
+               $this->getItems($data);
+                break;
+            case 'deleteItem':
+                $this->deleteItem($data);
+                break;
+        }
+    }
+    private function createItem() 
+    {
+        header('Content-Type:application/json'); //回傳json格式
         $target_dirctory = 'uploads/';
-        $target_file = $target_dirctory. basename($_FILES['image_source']['name']);//取得檔名部分
-        $image_source = $_FILES['image_source'];
-        $name = strip_tags(trim($_POST['name']));
-        $price = intval(strip_tags(trim($_POST['price']))) ;
-        $image_file_type = strtolower(pathinfo($image_source['name'], PATHINFO_EXTENSION)) ;//用來分析路徑的資訊
+        $target_file = $target_dirctory. basename($_FILES['file']['name']);//取得檔名部分
+        $file = $_FILES['file'];   
+        $file_type = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION)) ;//用來分析路徑的資訊
+        $file_name = basename($_FILES['file']['name']);
         if(file_exists($target_file)){//檢查檔案是否存在
             echo json_encode(['message'=>'file already exist.']);
             exit;
         }
-        if(!getimagesize($image_source['tmp_name'])){//檢查是不是圖片
-            echo json_encode(['message' => 'this is not an image.']) ;
+        if($file_type!=='pdf'){//檢查檔案格式
+            echo json_encode(['message' => 'pdf only.']);
             exit;
         }
-        if($image_file_type!=='png' && $image_file_type!== 'jpeg' && $image_file_type!== 'jpg'){//檢查檔案格式
-            echo json_encode(['message' => 'jpeg,png only.']);
-            exit;
-        }
-        if($image_source['size']>5000000){//檢查檔案大小
+        if($file['size']>5000000){//檢查檔案大小
             echo json_encode(['message'=> 'file is too large.']);
             exit;
         }
-        if(move_uploaded_file($image_source['tmp_name'], $target_file)){//檢查是不是php正常上傳機制上傳的檔案，如果是就移動到指定的路徑
-            $theme = strip_tags(trim($_POST['theme']));
-            $language = strip_tags(trim($_POST['language']));
-            $author = strip_tags(trim($_POST['author']));
-            $publisher = strip_tags(trim($_POST['publisher']));
-            $published_date = date('Y-m-d', strtotime(strip_tags(trim($_POST['published_date']))));//轉成unix timestamp再轉成日期格式
-            $introduction = strip_tags(trim($_POST['introduction']));
-            $stock =intval(strip_tags(trim($_POST['stock']))) ;
-            $create_sql = 'insert into  products values(?,?,?,?,?,?,?,?,?,?,?,?,?);';          
-            $statement = $this->conn->prepare($create_sql);
-            $statement->execute([null,$name,$price,$target_file,$theme,$language,$author,$publisher,$published_date,$introduction,$stock,null,null]);
+        if(move_uploaded_file($file['tmp_name'], $target_file)){//檢查是不是php正常上傳機制上傳的檔案，如果是就移動到指定的路徑
+            $time = date("Y-m-d H:i:s");
+            $sql = 'insert into documents values(?,?,?,?,?,?);';          
+            $statement = $this->conn->prepare($sql);
+            $statement->execute([null,$file_name,$target_file,0,$time,$time]);
             if ($statement->rowCount() > 0) {
-                echo json_encode(['message' => 'create success', 'redirect' => 'list.php?page=1']);
+                echo json_encode(['message' => 'create success', 'reload' => 'true']);
                 exit;
             }else{
                 echo json_encode(['message'=> 'something wrong.']);
@@ -59,53 +70,53 @@ class File
     }
     
    
-    public function deleteItem()
+    private function deleteItem($data)
     {
-        $item_id = isset($_POST['itemID'])? intval($_POST['itemID']):null;//用isset確認變數是否存在
-        $delete_sql = 'delete from products where id = ? ';
-        $statement = $this->conn->prepare($delete_sql);
-        $statement->execute([$item_id]);
+        $id = strip_tags(trim($data['id']));
+        $sql = 'update documents set delete_flag = 1 where id = ? ';
+        $statement = $this->conn->prepare($sql);
+        $statement->execute([$id]);
         if ($statement->rowCount() > 0) {
-            echo json_encode(['message' => 'delete success', 'redirect' => 'list.php?page=1']);
+            echo json_encode(['message' => 'delete success', 'reload' => 'true']);
             exit;
         }
     }
-    public function getItems()
+    private function getItems($data)
     {
-        $keyword = isset($_GET['keyword'])?strip_tags(trim($_GET['keyword'])):null;
-        $page_now = isset($_GET['page'])? intval($_GET['page']):null; //從網址列參數索取當下頁面並轉數字
-        
-        $total_row_count_sql = $keyword===null? 'select count(*) from products':"select count(*) from products where (name like ? or introduction like ?)";
-        $statement = $this->conn->prepare($total_row_count_sql);
-        if($keyword===null){
-            $statement->execute();
-        }else{
-            $statement->execute(['%'.$keyword.'%','%'.$keyword.'%']);//like句型一樣擺問號在樣板，執行時放入'%*%'即可
+        header('Content-Type:application/json'); //回傳json格式
+        $keyword = strip_tags(trim($data['keyword']));
+        $startDate = strip_tags(trim($data['startDate']));
+        $endDate = strip_tags(trim($data['endDate']));
+
+        if(!$keyword&&!$startDate&&!$endDate){
+            $sql = 'select id,name,source from documents where delete_flag = 0 order by created_at desc limit 5';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo  json_encode($data);
+            exit;
         }
        
-        $total_row_count = $statement->fetch(PDO::FETCH_NUM)[0];
-        $per_page = 10;
-        $pages = intval(ceil($total_row_count / $per_page)); //無條件進位但回傳浮點數，round四捨五入，floor無條件捨去
-        $data_sql = $keyword===null? sprintf('select id,name from products limit %d offset %d', $per_page, ($page_now - 1) * $per_page):sprintf('select id,name from products where (name like ? or introduction like ?) limit %d offset %d', $per_page, ($page_now - 1) * $per_page); //特定格式組字串，用offset計算起始位置，搭配limit設定要讀取的範圍
-        $statement = $this->conn->prepare($data_sql);
-        if($keyword===null){
-            $statement->execute();
-        }else{
-            $statement->execute(['%'.$keyword.'%','%'.$keyword.'%']);
-        }
-        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
-        if($keyword===null){
-            return ['page_now' => $page_now, 'pages' => $pages, 'data' => $data];
-        }else{
-            return ['page_now' => $page_now, 'pages' => $pages, 'data' => $data,'keyword'=>$keyword];
-        }
-       
+       $startDate = date('Y-m-d H:i:s',strtotime(strip_tags(trim($data['startDate']))));//用strtotime轉換日期文字格式為unix timestamp
+       if(!$endDate){
+        $endDate = date("Y-m-d H:i:s");  
+       }else{
+        $endDate = date('Y-m-d H:i:s',strtotime(strip_tags(trim($data['endDate']))));//用strtotime轉換日期文字格式為unix timestamp
+       }
+       $sql = 'select id,name,source from documents where delete_flag = 0 and name like ? and created_at between ? and ? order by created_at desc';
+       $stmt = $this->conn->prepare($sql);
+       $stmt->execute(['%'.$keyword.'%',$startDate,$endDate]);
+       $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+       echo  json_encode($data);
+       exit;
     }
    
    
 }
 
-$product = new File($conn);
+$file = new File($conn);
 
+$file->getDataFromFrontend();
 
+$file = null;
 

@@ -1,4 +1,13 @@
-<?php require_once "./parts/head.php"; ?>
+<?php
+session_start();
+require_once "./parts/head.php";
+if(!isset(($_SESSION['user']))){ //沒權限就不給連
+  header('Location:index.php');
+}
+if($_GET) {
+    header('Location:not-found.php');
+}
+?>
 <div id="dashboard">
     <header>
         <button id="reload" title="reload">🗘</button>
@@ -12,23 +21,22 @@
             </form>
         </section>
         <section id="identity">
-            <span>hello,!</span>
-            <section id="admin-btns"><button id="upload-dialog-btn">⭱</button>
-            <button id="delete-dialog-btn">🗑</button></section>
-            <button id="logout">logout</button>
+            <span>hello,<?=$_SESSION['user']?>!</span>
+            <?php if(isset($_SESSION['identity'])&&$_SESSION['identity']==='admin') : ?>
+            <section id="admin-btns">
+                <button id="upload-dialog-btn" title="上傳文件">⭱</button>
+                <button id="delete-dialog-btn" title="刪除文件">🗑</button>
+            </section>
+            <?php endif ?>
+            <button id="logout" class="logout">logout</button>
         </section>
         <button id="aside-menu-btn">☰</button>
     </header>
     <section id="body">
         <aside id="link-list">
-            <button class="link-btn">ggg</button>
-            <button class="link-btn">ggg</button>
-            <button class="link-btn">ggg</button>
-            <button class="link-btn">ggg</button>
-
         </aside>
         <aside id="aside-menu">
-            <span>hello,!</span>
+            <span>hello,<?=$_SESSION['user']?>!</span>
             <button id="link-list-btn">查詢結果</button>
             <form>
                 <span> <input type="search" name="" id="" placeholder="請輸入關鍵字...">
@@ -36,9 +44,11 @@
                 <label>日期區間：<br><input type="date" name="" id="">~<br>
                     <input type="date" name="" id=""></label>
             </form>
+            <?php if(isset($_SESSION['identity'])&&$_SESSION['identity']==='admin') : ?>
             <button id="aside-upload-dialog-btn">上傳文件</button>
             <button id="aside-delete-dialog-btn">刪除文件</button>
-            <button>logout</button>
+            <?php endif ?>
+            <button id="aside-logout" class="logout">logout</button>
         </aside>
         <main>
             <div id="controls">
@@ -54,16 +64,22 @@
     <button id="close-alert-modal">✖</button>
     <p id="alert">請輸入關鍵字或日期!</p>
 </dialog>
+<?php  if(isset($_SESSION['identity'])&&$_SESSION['identity']==='admin') : ?>
 <dialog id="upload-dialog">
 <button id="close-upload-modal">✖</button>
-<input type="file" name="" id="file">
+<form id="upload-form" method="post" enctype="multipart/form-data">
+<input type="file" name="file" id="file" accept="application/pdf">
 <p id="upload-message">確認上傳該筆新文件?</p>
-<button id="confirm-upload">上傳</button>
-
+<button type="submit" id="confirm-upload">上傳</button>
+</form>
 </dialog>
+<?php endif ?>
+<?php  if(isset($_SESSION['identity'])&&$_SESSION['identity']==='admin') : ?>
 <dialog id="delete-dialog">
 <button id="close-delete-modal">✖</button>
 <p id="delete-message">確認刪除該筆資料?</p>
 <button id="confirm-delete">刪除</button>
 </dialog>
+<?php endif ?>
+<script src="dashboard.js"></script>
 <?php require_once './parts/foot.php'; ?>
